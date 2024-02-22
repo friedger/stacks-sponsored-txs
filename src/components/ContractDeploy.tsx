@@ -13,7 +13,7 @@ const ContractDeploy = () => {
   const { doContractDeploy } = useConnect();
   const [contractName, setContractName] = useState('p1');
   const [codeBody, setCodeBody] = useState(
-    "(stx-transfer? u1000000 tx-sender 'ST1CXK7PNT0ZKW2SJ6PPYNRZW27P4622F5936D8GQ)"
+    "(stx-transfer? u1 tx-sender 'SP000000000000000000002Q6VF78)"
   );
   function deploy() {
     doContractDeploy({
