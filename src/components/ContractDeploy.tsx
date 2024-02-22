@@ -1,5 +1,6 @@
 import { useConnect } from '@stacks/connect-react';
 import { AnchorMode, PostConditionMode } from '@stacks/transactions';
+import { StacksMainnet } from '@stacks/network';
 
 import { userSession } from '../user-session';
 import { useState } from 'react';
@@ -8,6 +9,8 @@ import { Button } from '@chakra-ui/button';
 import { Input } from '@chakra-ui/input';
 import { Box } from '@chakra-ui/layout';
 import { FormControl, FormHelperText, FormLabel } from '@chakra-ui/form-control';
+
+const network = new StacksMainnet();
 
 const ContractDeploy = () => {
   const { doContractDeploy } = useConnect();
@@ -21,11 +24,12 @@ const ContractDeploy = () => {
       contractName,
       anchorMode: AnchorMode.Any,
       postConditionMode: PostConditionMode.Allow,
+      network,
       onFinish: data => {
         console.log('onFinish:', data);
         window
           .open(
-            `https://explorer.hiro.so/txid/${data.stacksTransaction.txid}?chain=testnet`,
+            `https://explorer.hiro.so/txid/${data.stacksTransaction.txid}?chain=mainnet`,
             '_blank'
           )
           ?.focus();
