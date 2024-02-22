@@ -1,14 +1,16 @@
-import { showConnect } from "@stacks/connect";
+import { showConnect } from '@stacks/connect';
 
-import { userSession } from "../user-session";
+import { userSession } from '../user-session';
+import { Box, Text } from '@chakra-ui/layout';
+import { Button } from '@chakra-ui/button';
 
 function authenticate() {
   showConnect({
     appDetails: {
-      name: "Stacks React Starter",
-      icon: window.location.origin + "/logo512.png",
+      name: 'Stacks React Starter',
+      icon: window.location.origin + '/logo512.png',
     },
-    redirectTo: "/",
+    redirectTo: '/',
     onFinish: () => {
       window.location.reload();
     },
@@ -17,19 +19,19 @@ function authenticate() {
 }
 
 function disconnect() {
-  userSession.signUserOut("/");
+  userSession.signUserOut('/');
 }
 
 const ConnectWallet = () => {
   if (userSession.isUserSignedIn()) {
     return (
-      <div>
-        <button className="Connect" onClick={disconnect}>
+      <Box>
+        <Button variant="ghost" className="Connect" onClick={disconnect}>
           Disconnect Wallet
-        </button>
-        <p>mainnet: {userSession.loadUserData().profile.stxAddress.mainnet}</p>
-        <p>testnet: {userSession.loadUserData().profile.stxAddress.testnet}</p>
-      </div>
+        </Button>
+        <Text>mainnet: {userSession.loadUserData().profile.stxAddress.mainnet}</Text>
+        <Text>testnet: {userSession.loadUserData().profile.stxAddress.testnet}</Text>
+      </Box>
     );
   }
 

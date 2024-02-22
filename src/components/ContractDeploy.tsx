@@ -2,15 +2,23 @@ import { useConnect } from '@stacks/connect-react';
 import { AnchorMode, PostConditionMode } from '@stacks/transactions';
 
 import { userSession } from '../user-session';
+import { useState } from 'react';
+import { Textarea } from '@chakra-ui/textarea';
+import { Button } from '@chakra-ui/button';
+import { Input } from '@chakra-ui/input';
+import { Box } from '@chakra-ui/layout';
+import { FormControl, FormHelperText, FormLabel } from '@chakra-ui/form-control';
 
 const ContractDeploy = () => {
   const { doContractDeploy } = useConnect();
-
+  const [contractName, setContractName] = useState('p1');
+  const [codeBody, setCodeBody] = useState(
+    "(stx-transfer? u1000000 tx-sender 'ST1CXK7PNT0ZKW2SJ6PPYNRZW27P4622F5936D8GQ)"
+  );
   function deploy() {
     doContractDeploy({
-      codeBody: "(stx-transfer? u1000000 tx-sender 'ST1CXK7PNT0ZKW2SJ6PPYNRZW27P4622F5936D8GQ)",
-      contractName: 'p3',
-      sponsored: true,
+      codeBody,
+      contractName,
       anchorMode: AnchorMode.Any,
       postConditionMode: PostConditionMode.Allow,
       onFinish: data => {
@@ -33,12 +41,31 @@ const ContractDeploy = () => {
   }
 
   return (
-    <div>
-      <p>Deploy Sponsored Contract</p>
-      <button className="Vote" onClick={() => deploy()}>
+    <Box>
+      <p>Deploy Contract without Post Conditions</p>
+      <FormControl>
+        <FormLabel>Contract name</FormLabel>
+        <Input
+          value={contractName}
+          onChange={e => {
+            setContractName(e.currentTarget.value);
+          }}
+        />
+        <FormHelperText>How the contract will be called.</FormHelperText>
+      </FormControl>
+
+      <br />
+      <Textarea
+        value={codeBody}
+        onChange={e => {
+          setCodeBody(e.currentTarget.value);
+        }}
+      />
+      <br />
+      <Button className="Vote" onClick={() => deploy()}>
         Deploy
-      </button>
-    </div>
+      </Button>
+    </Box>
   );
 };
 
