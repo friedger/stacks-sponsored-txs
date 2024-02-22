@@ -15,7 +15,12 @@ const ContractDeploy = () => {
       postConditionMode: PostConditionMode.Allow,
       onFinish: data => {
         console.log('onFinish:', data);
-        window.open(`https://explorer.hiro.so/txid/${data.txId}?chain=testnet`, '_blank')?.focus();
+        window
+          .open(
+            `https://explorer.hiro.so/txid/${data.stacksTransaction.txid}?chain=testnet`,
+            '_blank'
+          )
+          ?.focus();
       },
       onCancel: () => {
         console.log('onCancel:', 'Transaction was canceled');
